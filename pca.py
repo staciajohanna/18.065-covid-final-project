@@ -1,14 +1,13 @@
 import pandas as pd
-
-import numpy as np
-x = np.random.rand(185, 10)
-y = np.random.rand(185)
-
-from sklearn.preprocessing import StandardScaler
-x = StandardScaler().fit_transform(x)
-
 from sklearn.decomposition import PCA
-pca = PCA(n_components=2)
-principalComponents = pca.fit_transform(x)
+import numpy as np
 
-pca.explained_variance_ratio_
+training = pd.read_csv('training.csv')
+x = training.filter(items = ['humidity', 'temp', 'ghsi', 'medianage', 'sars', 'popdens', 'landarea', 'gdp'])
+
+for n in [2, 4, 6]:
+	pca = PCA(n_components=n)
+	principalComponents = pca.fit_transform(x)
+	print(pca.explained_variance_ratio_)
+	filename = f'pc{n}.csv'
+	np.savetxt(filename, principalComponents, delimiter = ',')
