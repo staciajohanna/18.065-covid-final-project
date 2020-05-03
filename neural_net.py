@@ -4,6 +4,7 @@ from tensorflow.keras.layers import Dense
 import numpy as np
 import tensorflow as tf
 import math
+from matplotlib import pyplot
 
 # Process training set
 # Loading data
@@ -28,19 +29,26 @@ y_valid = tf.convert_to_tensor(np.asarray(y_valid), np.float32)
 
 # Number of features without PCA
 num_features = X_train.shape[1]
-print(num_features)
 
 # Define model
 model = Sequential()
-model.add(Dense(10, activation='relu', kernel_initializer='he_normal', input_shape=(num_features,)))
-model.add(Dense(1))
+model.add(Dense(20, activation='relu', input_shape=(num_features,)))
+model.add(Dense(20, activation='relu'))
+model.add(Dense(1, activation='linear'))
 
 # Compile model
-model.compile(optimizer='sgd', loss='mse')
+model.compile(optimizer='adam', loss='mse', metrics=["mse", "mae"])
 
 # Fit model
-model.fit(X_train, y_train, epochs=150, batch_size=32, verbose=0)
+history = model.fit(X_train, y_train, validation_data=(X_valid, y_valid), epochs=100, batch_size=10, verbose=0)
 
 # Evaluate model with validation data
-error = model.evaluate(X_valid, y_valid, verbose=0)
-print('MSE: %.3f, RMSE: %.3f' % (error, math.sqrt(error)))
+error = model.evaluate(X_valid, y_valid, verbose=1)
+print(error)
+print(math.sqrt(error[0]))
+
+pyplot.title('Loss / Mean Squared Error')
+pyplot.plot(history.history['loss'], label='train')
+pyplot.plot(history.history['val_loss'], label='validation')
+pyplot.legend()
+pyplot.show()
