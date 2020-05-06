@@ -7,7 +7,7 @@ all_data = pd.read_csv("data/std_train_x.csv",header=None)
 df = all_data
 target = pd.read_csv("data/train_y.csv",header=None)
 
-#validation 
+#training 
 X_training = df
 y_training = target
 model = sm.OLS(y_training, X_training).fit()
