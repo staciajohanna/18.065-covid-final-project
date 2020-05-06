@@ -14,7 +14,7 @@ import statistics
 np.random.seed(42)
 
 # Process training set
-train_X_path = './data/std_train_x.csv'
+train_X_path = './data/pc6_ev[ 0.3413183 0.25478867 0.13134266 0.10615022 0.06533687 0.05613034]_train_x.csv'
 X_train_raw = read_csv(train_X_path, header=None)
 X_train = tf.convert_to_tensor(np.asarray(X_train_raw), np.float64)
 
@@ -23,7 +23,7 @@ y_train_raw = np.asarray(read_csv(train_y_path, header=None))
 y_train = tf.convert_to_tensor(y_train_raw, np.float64)
 
 # Process validation set
-valid_X_path = './data/std_val_x.csv'
+valid_X_path = './data/pc6_ev[ 0.3413183 0.25478867 0.13134266 0.10615022 0.06533687 0.05613034]_val_x.csv'
 X_valid_raw = read_csv(valid_X_path, header=None)
 X_valid = tf.convert_to_tensor(np.asarray(X_valid_raw), np.float32)
 
@@ -31,7 +31,6 @@ valid_y_path = './data/val_y.csv'
 y_valid_raw = np.asarray(read_csv(valid_y_path, header=None))
 y_valid = tf.convert_to_tensor(y_valid_raw, np.float32)
 
-# Number of features without PCA
 num_features = X_train.shape[1]
 num_loop = 5
 total = 0.0
